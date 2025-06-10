@@ -17,3 +17,6 @@ class TestLeafNode(unittest.TestCase):
     def test_leaf_to_html_none_tag(self):
         node = LeafNode(None, "some more tagless text", {"href": "https://www.google.com"})
         self.assertEqual(node.to_html(), "some more tagless text")
+        
+if __name__ == "__main__":
+    unittest.main()
