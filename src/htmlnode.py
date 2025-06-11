@@ -28,16 +28,6 @@ class HTMLNode:
         result =  f"<{self.tag}{self.props_to_html()}>{none_sempty(self.value)}{children_html}</{self.tag}>"    
         return result
 
-        # if self.children == None or len(self.children) == 0:
-        #     return f"<{self.tag}{self.props_to_html()}>{none_sempty(self.value)}</{self.tag}>"
-        # else:
-        #     children = []
-        #     for child in self.children:
-        #         if child != None:
-        #             children.append(child.to_html())
-        #     return f"<{self.tag}{self.props_to_html()}>{none_sempty(self.value)}{"".join(children)}</{self.tag}>"
-        # raise NotImplementedError()
-    
     def props_to_html(self) -> str:
         def kv_to_attribute(item):
             return f"{item[0]}=\"{item[1]}\""

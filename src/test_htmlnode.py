@@ -15,10 +15,5 @@ class TestHtmlNode(unittest.TestCase):
         pNode = HTMLNode("p","link to kernel web page",[anchorNode])
         self.assertEqual(pNode.to_html(),'<p>link to kernel web page<a href="http://www.kernel.org/" target="_blank">kernel</a></p>')
 
-    # def test_3(self):        
-    #     childNodes = [HTMLNode("a","kernel",None,{"href":"http://www.kernel.org/","target":"_blank"})]
-    #     newNode = HTMLNode("div","value text",childNodes)
-    #     self.assertEqual(newNode.to_html(),"<div>value text<a href=\"http://www.kernel.org/\" target=\"_blank\">kernel</a></div>")
-
 if __name__ == "__main__":
     unittest.main()
