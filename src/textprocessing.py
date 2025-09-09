@@ -91,3 +91,13 @@ def split_nodes_link(oldnodes:list[TextNode]):
                 raise Exception(f"Multiple matches indicates multiple links but no additional text found after first match. matches:{matches} sections:{sections}") 
 
     return newNodes
+
+def text_to_textnodes(text):
+    newNodes = []
+    newNodes.append(TextNode(text,TextType.TEXT))
+    newNodes = split_nodes_delimiter(newNodes,"`",TextType.CODE)
+    newNodes = split_nodes_delimiter(newNodes,"**",TextType.BOLD)
+    newNodes = split_nodes_delimiter(newNodes,"_",TextType.ITALIC)
+    newNodes = split_nodes_image(newNodes)
+    newNodes = split_nodes_link(newNodes)
+    return newNodes
