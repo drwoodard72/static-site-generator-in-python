@@ -21,6 +21,9 @@ def split_nodes_delimiter(old_nodes:list[TextNode], delimiter:str, text_type:Tex
             newNodes.append(oldNode)
             continue
         oldParts = oldNode.text.split(delimiter)
+        if len(oldParts) == 1:
+            newNodes.append(oldNode)
+            continue
         if len(oldParts) != 3:
             raise Exception("Invalid markdown text")
         oldParts[0] = TextNode(oldParts[0],TextType.TEXT)
