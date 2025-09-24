@@ -141,5 +141,17 @@ This is the same paragraph on a new line
             ],
         )
         
+def test_block_to_block_type(self):
+    md = ""
+    #todo: add test case for each block type
+    # Headings start with 1-6 # characters, followed by a space and then the heading text.
+    # Code blocks must start with 3 backticks and end with 3 backticks.
+    # Every line in a quote block must start with a > character.
+    # Every line in an unordered list block must start with a - character, followed by a space.
+    # Every line in an ordered list block must start with a number followed by a . character and a space. The number must start at 1 and increment by 1 for each line.
+    # If none of the above conditions are met, the block is a normal paragraph.
+    result = block_to_block_type(md)
+    self.assertEqual(result,BlockType.paragraph)
+
 if __name__ == "__main__":
     unittest.main()
