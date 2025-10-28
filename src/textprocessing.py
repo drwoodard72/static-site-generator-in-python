@@ -121,11 +121,37 @@ def markdown_to_blocks(markdown):
 
 def block_to_block_type(markdown):
     #todo: add case for each BlockType
-    match markdown:
-# Headings start with 1-6 # characters, followed by a space and then the heading text.
-# Code blocks must start with 3 backticks and end with 3 backticks.
-# Every line in a quote block must start with a > character.
-# Every line in an unordered list block must start with a - character, followed by a space.
-# Every line in an ordered list block must start with a number followed by a . character and a space. The number must start at 1 and increment by 1 for each line.
-    case _: # If none of the above conditions are met, the block is a normal paragraph.
+    # Headings start with 1-6 # characters, followed by a space and then the heading text.
+    if markdown.startswith(("# ","## ","### ","#### ","##### ","###### ")):
+        return BlockType.heading
+    
+    # Code blocks must start with 3 backticks and end with 3 backticks.
+    if markdown.startswith("```") & markdown.endswith("```"):
+        return BlockType.code
+
+    # Every line in a quote block must start with a > character.
+    if markdown.startswith(">"):
+        return BlockType.quote
+
+    # Every line in an unordered list block must start with a - character, followed by a space.
+    if markdown.startswith("- "):
+        return BlockType.unordered_list
+
+    # Every line in an ordered list block must start with a number followed by a . character and a space. The number must start at 1 and increment by 1 for each line.
+    numeric = 0
+    period = 0
+    for c in markdown:
+        if c == " ":
+            if period == 1 and numeric > 0:
+                return BlockType.ordered_list
+            else:
+                break
+        elif c.isnumeric():
+            numeric += 1
+        elif c == ".":
+            period += 1
+        else:
+            break
+
+    # If none of the above conditions are met, the block is a normal paragraph.
         return BlockType.paragraph
