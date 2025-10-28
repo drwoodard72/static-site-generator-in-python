@@ -142,15 +142,49 @@ This is the same paragraph on a new line
         )
         
 def test_block_to_block_type(self):
-    md = ""
     #todo: add test case for each block type
     # Headings start with 1-6 # characters, followed by a space and then the heading text.
+    result = block_to_block_type("# level 1 heading text")
+    self.assertEqual(result,BlockType.heading)
+    result = block_to_block_type("## level 2 heading text")
+    self.assertEqual(result,BlockType.heading)
+    result = block_to_block_type("### level 3 heading text")
+    self.assertEqual(result,BlockType.heading)
+    result = block_to_block_type("#### level 4 heading text")
+    self.assertEqual(result,BlockType.heading)
+    result = block_to_block_type("##### level 5 heading text")
+    self.assertEqual(result,BlockType.heading)
+    result = block_to_block_type("###### level 6 heading text")
+    self.assertEqual(result,BlockType.heading)
+    result = block_to_block_type("#invalid quote block text")
+    self.assertEqual(result,BlockType.paragraph)
+
     # Code blocks must start with 3 backticks and end with 3 backticks.
+    result = block_to_block_type("```code block text```")
+    self.assertEqual(result,BlockType.code)
+    result = block_to_block_type("```invalid quote block text")
+    self.assertEqual(result,BlockType.paragraph)
+    result = block_to_block_type("invalid quote block text```")
+    self.assertEqual(result,BlockType.paragraph)
+
     # Every line in a quote block must start with a > character.
+    result = block_to_block_type(">quote block text")
+    self.assertEqual(result,BlockType.quote)
+
     # Every line in an unordered list block must start with a - character, followed by a space.
+    result = block_to_block_type("- unordered list block text")
+    self.assertEqual(result,BlockType.unordered_list)
+    result = block_to_block_type("-invalid unordered list block text")
+    self.assertEqual(result,BlockType.paragraph)
+
     # Every line in an ordered list block must start with a number followed by a . character and a space. The number must start at 1 and increment by 1 for each line.
+    result = block_to_block_type(". ordered list block text")
+    self.assertEqual(result,BlockType.ordered_list)
+    result = block_to_block_type(".invalid ordered list block text")
+    self.assertEqual(result,BlockType.paragraph)
+
     # If none of the above conditions are met, the block is a normal paragraph.
-    result = block_to_block_type(md)
+    result = block_to_block_type("the block is a normal paragraph")
     self.assertEqual(result,BlockType.paragraph)
 
 if __name__ == "__main__":
