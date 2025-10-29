@@ -154,4 +154,4 @@ def block_to_block_type(markdown):
             break
 
     # If none of the above conditions are met, the block is a normal paragraph.
-        return BlockType.paragraph
+    return BlockType.paragraph
