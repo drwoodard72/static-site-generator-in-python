@@ -3,7 +3,7 @@ import re
 from enum import Enum
 from htmlnode import *
 
-BlockType = Enum('BlockType', ['paragraph','heading','code','quote','unordered_list','ordered_list'])
+BlockType = Enum('BlockType', ['paragraph','heading1','heading2','heading3','heading4','heading5','heading6','code','quote','unordered_list','ordered_list'])
 
 def split_nodes_delimiter(old_nodes:list[TextNode], delimiter:str, text_type:TextType) -> list[TextNode]:
     newNodes = []
@@ -124,8 +124,22 @@ def block_to_block_type(markdown):
     #todo: add case for each BlockType
     # Headings start with 1-6 # characters, followed by a space and then the heading text.
     if markdown.startswith(("# ","## ","### ","#### ","##### ","###### ")):
-        return BlockType.heading
-    
+        match markdown.index(" "):
+            case 1:
+                return BlockType.heading1
+            case 2:
+                return BlockType.heading2
+            case 3:
+                return BlockType.heading3
+            case 4:
+                return BlockType.heading4
+            case 5:
+                return BlockType.heading5
+            case 6:
+                return BlockType.heading6
+            case _:
+                return BlockType.heading6
+
     # Code blocks must start with 3 backticks and end with 3 backticks.
     if markdown.startswith("```") & markdown.endswith("```"):
         return BlockType.code
@@ -157,13 +171,40 @@ def block_to_block_type(markdown):
     # If none of the above conditions are met, the block is a normal paragraph.
     return BlockType.paragraph
 
+def text_to_children(markdown):
+    return None
+    
 def markdown_to_html_node(markdown):
     parentHTMLNode = HTMLNode("div")
 
+    # Split the markdown into blocks (you already have a function for this)
+    blocks = markdown_to_blocks(markdown)
+    # Loop over each block:
+    for block in blocks:
+        newHTMLNode = None
+        # Determine the type of block (you already have a function for this)
+        match block_to_block_type(block):
+            case BlockType.heading1:
+                newHTMLNode = HTMLNode("h1",block)
+            case BlockType.heading1:
+                newHTMLNode = HTMLNode("h2",block)
+            case BlockType.heading1:
+                newHTMLNode = HTMLNode("h3",block)
+            case BlockType.heading1:
+                newHTMLNode = HTMLNode("h4",block)
+            case BlockType.heading1:
+                newHTMLNode = HTMLNode("h5",block)
+            case BlockType.heading1:
+                newHTMLNode = HTMLNode("h6",block)
+            case BlockType.code:
+                newHTMLNode = HTMLNode("code",block)
+            case BlockType.quote:
+                if newHTMLNode == None:
+                    newHTMLNode = HTMLNode("blockquote")
+                newHTMLNode.children.append(HTMLNode("p",block))
+            
+
 # TODO:
-# Split the markdown into blocks (you already have a function for this)
-# Loop over each block:
-# Determine the type of block (you already have a function for this)
 # Based on the type of block, create a new HTMLNode with the proper data
 # Assign the proper child HTMLNode objects to the block node. I created a shared text_to_children(text) function that works for all block types. It takes a string of text and returns a list of HTMLNodes that represent the inline markdown using previously created functions (think TextNode -> HTMLNode).
 # The "code" block is a bit of a special case: it should not do any inline markdown parsing of its children. I didn't use my text_to_children function for this block type, I manually made a TextNode and used text_node_to_html_node.
