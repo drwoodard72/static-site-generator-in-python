@@ -144,17 +144,17 @@ This is the same paragraph on a new line
     def test_block_to_block_type(self):
         # Headings start with 1-6 # characters, followed by a space and then the heading text.
         result = block_to_block_type("# level 1 heading text")
-        self.assertEqual(result,BlockType.heading)
+        self.assertEqual(result,BlockType.heading1)
         result = block_to_block_type("## level 2 heading text")
-        self.assertEqual(result,BlockType.heading)
+        self.assertEqual(result,BlockType.heading2)
         result = block_to_block_type("### level 3 heading text")
-        self.assertEqual(result,BlockType.heading)
+        self.assertEqual(result,BlockType.heading3)
         result = block_to_block_type("#### level 4 heading text")
-        self.assertEqual(result,BlockType.heading)
+        self.assertEqual(result,BlockType.heading4)
         result = block_to_block_type("##### level 5 heading text")
-        self.assertEqual(result,BlockType.heading)
+        self.assertEqual(result,BlockType.heading5)
         result = block_to_block_type("###### level 6 heading text")
-        self.assertEqual(result,BlockType.heading)
+        self.assertEqual(result,BlockType.heading6)
         result = block_to_block_type("#invalid quote block text")
         self.assertEqual(result,BlockType.paragraph)
 
