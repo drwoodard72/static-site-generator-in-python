@@ -5,19 +5,20 @@ from typing import List, Dict, Self
 #         return None
 #     return value
 
-def none_sempty(value:any):
+def none_sempty(value:object):
     if value == None or value == "None":
         return ""
     return value
 
 class HTMLNode:
-    def __init__(self, tag:str="", value:str="", children:List[Self]=None, props:Dict[str,str]=None ):
+    def __init__(self, tag:str="", value:str="", children:list[object]=[], props:Dict[str,str]={} ):
         # print(f"HTMLNode.__init__\n  tag:({type(tag)}){tag}\n  value:({type(value)}){value}\n  children:({type(children)}){children}\n  props:({type(props)}){props}\n  ")
         self.tag = tag
         self.value = value
-        self.children = children
+        self.children = []
+        if children != None and len(children) > 0:
+            self.children.extend(children)
         self.props = props
-
     def to_html(self) -> str:
         if self.tag == None or self.tag.strip() == "":
             return self.value

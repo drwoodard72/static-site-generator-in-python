@@ -99,7 +99,7 @@ def split_nodes_link(oldnodes:list[TextNode]):
 
     return newNodes
 
-def text_to_textnodes(text):
+def text_to_textnodes(text) -> list[TextNode]:
     newNodes = []
     newNodes.append(TextNode(text,TextType.TEXT))
     newNodes = split_nodes_delimiter(newNodes,"`",TextType.CODE)
@@ -109,7 +109,7 @@ def text_to_textnodes(text):
     newNodes = split_nodes_link(newNodes)
     return newNodes
 
-def markdown_to_blocks(markdown):
+def markdown_to_blocks(markdown:str) -> list[str]:
     markdownBlocks = markdown.split('\n\n')
     results = []
     for s in markdownBlocks:
@@ -181,28 +181,32 @@ def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
     # Loop over each block:
     for block in blocks:
-        newHTMLNode = None
         # Determine the type of block (you already have a function for this)
         match block_to_block_type(block):
             case BlockType.heading1:
-                newHTMLNode = HTMLNode("h1",block)
-            case BlockType.heading1:
-                newHTMLNode = HTMLNode("h2",block)
-            case BlockType.heading1:
-                newHTMLNode = HTMLNode("h3",block)
-            case BlockType.heading1:
-                newHTMLNode = HTMLNode("h4",block)
-            case BlockType.heading1:
-                newHTMLNode = HTMLNode("h5",block)
-            case BlockType.heading1:
-                newHTMLNode = HTMLNode("h6",block)
+                parentHTMLNode.children.append(HTMLNode("h1",block))
+            case BlockType.heading2:
+                parentHTMLNode.children.append(HTMLNode("h2",block))
+            case BlockType.heading3:
+                parentHTMLNode.children.append(HTMLNode("h3",block))
+            case BlockType.heading4:
+                parentHTMLNode.children.append(HTMLNode("h4",block))
+            case BlockType.heading5:
+                parentHTMLNode.children.append(HTMLNode("h5",block))
+            case BlockType.heading6:
+                parentHTMLNode.children.append(HTMLNode("h6",block))
             case BlockType.code:
-                newHTMLNode = HTMLNode("code",block)
-            case BlockType.quote:
-                if newHTMLNode == None:
-                    newHTMLNode = HTMLNode("blockquote")
-                newHTMLNode.children.append(HTMLNode("p",block))
-            
+                preHTMLNode = HTMLNode("pre")
+                preHTMLNode.children.append(HTMLNode("code",block[4:-4]))
+                parentHTMLNode.children.append(preHTMLNode)
+                
+
+        #     case BlockType.quote:
+        #         if newHTMLNode == None:
+        #             newHTMLNode = HTMLNode("blockquote")
+        #         newHTMLNode.children.append(HTMLNode("p",block))
+            case BlockType.paragraph:
+                parentHTMLNode.children.append(HTMLNode("p",block))            
 
 # TODO:
 # Based on the type of block, create a new HTMLNode with the proper data
