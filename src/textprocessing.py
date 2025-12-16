@@ -197,7 +197,7 @@ def markdown_to_html_node(markdown):
                 parentHTMLNode.children.append(HTMLNode("h6",block))
             case BlockType.code:
                 preHTMLNode = HTMLNode("pre")
-                preHTMLNode.children.append(HTMLNode("code",block[4:-4]))
+                preHTMLNode.children.append(HTMLNode("code",block[4:-3]))
                 parentHTMLNode.children.append(preHTMLNode)
                 
 
