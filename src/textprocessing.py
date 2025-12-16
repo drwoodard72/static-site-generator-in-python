@@ -202,7 +202,24 @@ def markdown_to_html_node(markdown):
             case BlockType.quote:
                 parentHTMLNode.children.append(HTMLNode("quote",block[1:]))
             case BlockType.paragraph:
-                parentHTMLNode.children.append(HTMLNode("p",block))            
+                textNodes = text_to_textnodes(block)
+                paragraphHTMLNode = HTMLNode("p")
+                #TODO: Process text nodes into html nodes and append to paragraph
+                parentHTMLNode.children.append(paragraphHTMLNode)
+            case BlockType.unordered_list:
+                ulHTMLNode = HTMLNode("ul")
+                #TODO: Process block into lines (li)
+                # process each line into text nodes
+                #   process text nodes into html nodes and append to li
+                #   append li to ul
+                parentHTMLNode.children.append(ulHTMLNode)
+            case BlockType.ordered_list:
+                olHTMLNode = HTMLNode("ol")
+                #TODO: Process block into lines (li)
+                # process each line into text nodes
+                #   process text nodes into html nodes and append to li
+                #   append li to ol
+                parentHTMLNode.children.append(olHTMLNode)
 
 # TODO:
 # Based on the type of block, create a new HTMLNode with the proper data
