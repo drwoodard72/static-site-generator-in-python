@@ -182,7 +182,7 @@ def markdown_to_html_node(markdown):
     # Loop over each block:
     for block in blocks:
         # Determine the type of block (you already have a function for this)
-        match block_to_block_type(block):
+        match block_to_block_type(block):  #['paragraph','heading1','heading2','heading3','heading4','heading5','heading6','code','quote','unordered_list','ordered_list']
             case BlockType.heading1:
                 parentHTMLNode.children.append(HTMLNode("h1",block))
             case BlockType.heading2:
