@@ -199,12 +199,8 @@ def markdown_to_html_node(markdown):
                 preHTMLNode = HTMLNode("pre")
                 preHTMLNode.children.append(HTMLNode("code",block[4:-3]))
                 parentHTMLNode.children.append(preHTMLNode)
-                
-
-        #     case BlockType.quote:
-        #         if newHTMLNode == None:
-        #             newHTMLNode = HTMLNode("blockquote")
-        #         newHTMLNode.children.append(HTMLNode("p",block))
+            case BlockType.quote:
+                parentHTMLNode.children.append(HTMLNode("quote",block[1:]))
             case BlockType.paragraph:
                 parentHTMLNode.children.append(HTMLNode("p",block))            
 
