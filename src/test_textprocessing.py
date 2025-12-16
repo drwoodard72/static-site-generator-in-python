@@ -155,15 +155,15 @@ This is the same paragraph on a new line
         self.assertEqual(result,BlockType.heading5)
         result = block_to_block_type("###### level 6 heading text")
         self.assertEqual(result,BlockType.heading6)
-        result = block_to_block_type("#invalid quote block text")
+        result = block_to_block_type("#invalid heading text")
         self.assertEqual(result,BlockType.paragraph)
 
         # Code blocks must start with 3 backticks and end with 3 backticks.
         result = block_to_block_type("```code block text```")
         self.assertEqual(result,BlockType.code)
-        result = block_to_block_type("```invalid quote block text")
+        result = block_to_block_type("```invalid code block text")
         self.assertEqual(result,BlockType.paragraph)
-        result = block_to_block_type("invalid quote block text```")
+        result = block_to_block_type("invalid code block text```")
         self.assertEqual(result,BlockType.paragraph)
 
         # Every line in a quote block must start with a > character.
