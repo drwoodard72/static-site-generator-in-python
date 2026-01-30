@@ -203,9 +203,8 @@ def markdown_to_html_node(markdown):
                 parentHTMLNode.children.append(HTMLNode("quote",block[1:]))
             case BlockType.paragraph:
                 textNodes = text_to_textnodes(block)
-                paragraphHTMLNode = HTMLNode("p")
-                #TODO: Process text nodes into html nodes and append to paragraph
-                parentHTMLNode.children.append(paragraphHTMLNode)
+                #TODO: use  text_node_to_html_node to process into child nodes and append restulting htmlNodes to parentHTMLNode
+                parentHTMLNode.children.append(htmlNodes)
             case BlockType.unordered_list:
                 ulHTMLNode = HTMLNode("ul")
                 #TODO: Process block into lines (li)
@@ -222,6 +221,9 @@ def markdown_to_html_node(markdown):
                 parentHTMLNode.children.append(olHTMLNode)
 
 # TODO:
+# Next task, case BlockType.paragraph
+#
+# Notes from lesson instructions:
 # Based on the type of block, create a new HTMLNode with the proper data
 # Assign the proper child HTMLNode objects to the block node. I created a shared text_to_children(text) function that works for all block types. It takes a string of text and returns a list of HTMLNodes that represent the inline markdown using previously created functions (think TextNode -> HTMLNode).
 # The "code" block is a bit of a special case: it should not do any inline markdown parsing of its children. I didn't use my text_to_children function for this block type, I manually made a TextNode and used text_node_to_html_node.
